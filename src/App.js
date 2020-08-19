@@ -18,10 +18,15 @@ const Aligner = styled.div`
   height: 100vh;
 `;
 
+//all we are doing here is getting the keys unordered entries from the countries dictionary
+//then ordering and using them to then retrieve the needed information from the dictionary
 const orderedCountries = Object.keys(Countries).sort(
   (a, b) => Countries[b].length - Countries[a].length
 );
 
+//mostly the same as above except we put the alphabetically sorted cities
+//against each countries name in a dictionary and use these values to
+//retrieve information from the countries dictionary
 const orderedCities = Object.keys(Countries).reduce((acc, country) => {
   acc[country] = Object.keys(Countries[country]).sort();
   return acc;
