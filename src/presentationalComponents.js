@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Transition } from "react-spring/renderprops";
 
 const List = styled.ul`
   overflow-y: scroll;
@@ -26,15 +27,24 @@ class KeyList extends React.Component {
   render() {
     return (
       <List>
-        {this.props.list.map((item, i) => (
-          <ListItem
-            selected={item === this.props.selected}
-            onClick={() => this.props.onClick(item)}
-            key={i}
-          >
-            {item}
-          </ListItem>
-        ))}
+        <Transition
+          items={this.props.list}
+          keys={(item) => item}
+          from={{ transform: "translate3d(0,-40px,0)", opacity: 0 }}
+          enter={{ transform: "translate3d(0,0px,0)", opacity: 1 }}
+          leave={{ display: "none" }}
+          trail={50}
+        >
+          {(item) => (props) => (
+            <ListItem
+              style={props}
+              selected={item === this.props.selected}
+              onClick={() => this.props.onClick(item)}
+            >
+              {item}
+            </ListItem>
+          )}
+        </Transition>
       </List>
     );
   }
